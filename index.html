@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#b01419">
+  <meta name="description" content="Magazzino Mirisa Ceramiche: giacenze in m² di pavimenti e rivestimenti tra Showroom e Magazzino.">
+  <title>Magazzino Mirisa</title>
+  <link rel="icon" type="image/svg+xml" href="Logo-Mirisa-Ceramiche-Vettoriale-2.svg">
+
+  <!-- Tailwind CSS (Play CDN, versione fissata) + palette aziendale -->
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script>
+    if (window.tailwind) tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            mirisa: { DEFAULT: '#b01419', dark: '#8a0f13', soft: '#fbeeee' },
+            grafite: { DEFAULT: '#656263', dark: '#3a3839' },
+            sabbia: { 50: '#fbf8f4', 100: '#f4ede4', 200: '#e8dccd', 300: '#d6c3ab' }
+          },
+          fontFamily: { sans: ['"Inter"', 'system-ui', 'sans-serif'] }
+        }
+      }
+    };
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-sabbia-50 text-grafite-dark font-sans antialiased">
+
+  <!-- ===================== HEADER ===================== -->
+  <header class="sticky top-0 z-30 bg-white/95 backdrop-blur border-b border-sabbia-200 shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 py-3 flex items-center gap-3">
+      <div class="logo-box">
+        <img id="logo-img" src="Logo-Mirisa-Ceramiche-Vettoriale-2.svg" alt="Mirisa Ceramiche" class="w-full h-full object-contain">
+        <span id="logo-fallback" class="logo-fallback" hidden>M</span>
+      </div>
+      <div class="min-w-0 flex-1">
+        <h1 class="text-lg sm:text-xl font-extrabold leading-tight text-grafite-dark truncate">
+          Mirisa <span class="text-mirisa">Ceramiche</span>
+        </h1>
+        <p class="text-xs sm:text-sm text-grafite truncate">Arredo Bagno &middot; La scelta giusta! &mdash; Gestione Magazzino</p>
+      </div>
+      <div class="hidden md:flex flex-col items-end text-right mr-2">
+        <span id="clock" class="text-sm font-semibold tabular-nums"></span>
+        <span id="today" class="text-xs text-grafite"></span>
+      </div>
+      <div id="status-pill" class="status-pill" title="Stato dell'applicazione">
+        <span class="status-dot"></span><span id="status-text">Attivo</span>
+      </div>
+      <button id="btn-settings" class="icon-btn" aria-label="Impostazioni" title="Impostazioni">
+        <svg viewBox="0 0 24 24" class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1Z"/></svg>
+      </button>
+    </div>
+
+    <!-- Navigazione a schede -->
+    <nav class="max-w-7xl mx-auto px-2 sm:px-4 tab-bar" role="tablist" aria-label="Sezioni">
+      <button class="tab-btn active" data-tab="catalogo" role="tab" aria-selected="true">
+        <span class="tab-ico">🧱</span><span>Catalogo <span class="hidden sm:inline">&amp; Giacenze</span></span>
+      </button>
+      <button class="tab-btn" data-tab="scarico" role="tab" aria-selected="false">
+        <span class="tab-ico">📤</span><span>Scarico <span class="hidden sm:inline">Merce</span></span>
+      </button>
+      <button class="tab-btn" data-tab="carico" role="tab" aria-selected="false">
+        <span class="tab-ico">✨</span><span>Carico Smart <span class="hidden sm:inline">(IA)</span></span>
+      </button>
+      <button class="tab-btn" data-tab="storico" role="tab" aria-selected="false">
+        <span class="tab-ico">📋</span><span>Storico</span>
+      </button>
+    </nav>
+  </header>
+
+  <main class="max-w-7xl mx-auto px-4 py-5 pb-24">
+
+    <!-- ===================== TAB: CATALOGO ===================== -->
+    <section id="tab-catalogo" class="tab-panel" role="tabpanel">
+      <!-- Riepilogo -->
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-5">
+        <div class="kpi"><span class="kpi-label">Articoli</span><span id="kpi-articoli" class="kpi-value">0</span></div>
+        <div class="kpi"><span class="kpi-label">m² totali disponibili</span><span id="kpi-mq" class="kpi-value">0</span></div>
+        <div class="kpi"><span class="kpi-label">Sotto scorta</span><span id="kpi-scorta" class="kpi-value text-mirisa">0</span></div>
+        <div class="kpi"><span class="kpi-label">Movimenti oggi</span><span id="kpi-oggi" class="kpi-value">0</span></div>
+      </div>
+
+      <!-- Barra strumenti: ricerca e azioni sulla prima riga, filtri rapidi sulla seconda -->
+      <div class="card p-3 sm:p-4 mb-4 space-y-3">
+        <div class="flex flex-col sm:flex-row gap-3">
+          <div class="relative flex-1 min-w-0">
+            <svg class="w-5 h-5 absolute left-3 top-1/2 -translate-y-1/2 text-grafite pointer-events-none" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+            <input id="search" type="search" class="input input-search" placeholder="Cerca per nome, codice, formato, fornitore…" autocomplete="off">
+          </div>
+          <div class="flex gap-2 shrink-0">
+            <div class="seg" role="group" aria-label="Vista">
+              <button id="view-grid" class="seg-btn active" title="Griglia" aria-label="Vista griglia">▦</button>
+              <button id="view-list" class="seg-btn" title="Lista" aria-label="Vista lista">☰</button>
+            </div>
+            <button id="btn-add-product" class="btn btn-primary flex-1">+ Nuovo articolo</button>
+          </div>
+        </div>
+        <div id="filter-chips" class="flex gap-2 overflow-x-auto no-scrollbar"></div>
+      </div>
+
+      <div id="catalog" class="catalog-grid"></div>
+      <p id="catalog-empty" class="empty" hidden>Nessun articolo corrisponde alla ricerca.</p>
+    </section>
+
+    <!-- ===================== TAB: SCARICO ===================== -->
+    <section id="tab-scarico" class="tab-panel" role="tabpanel" hidden>
+      <div class="grid lg:grid-cols-5 gap-5">
+        <form id="form-scarico" class="card p-5 lg:col-span-3 space-y-5" novalidate>
+          <div>
+            <h2 class="section-title">Scarico merce</h2>
+            <p class="text-sm text-grafite">Registra un prelievo. Data e ora vengono salvate in automatico.</p>
+          </div>
+
+          <div>
+            <label class="label" for="sc-search">Articolo</label>
+            <input id="sc-search" type="search" class="input mb-2" placeholder="Filtra articoli…" autocomplete="off">
+            <select id="sc-prodotto" class="input" required></select>
+            <div id="sc-preview" class="mt-3"></div>
+          </div>
+
+          <div>
+            <span class="label">Reparto</span>
+            <div class="seg seg-lg w-full" role="radiogroup">
+              <button type="button" class="seg-btn flex-1 active" data-reparto="Showroom">🏬 Showroom</button>
+              <button type="button" class="seg-btn flex-1" data-reparto="Magazzino">🏭 Magazzino</button>
+            </div>
+          </div>
+
+          <div class="grid sm:grid-cols-2 gap-4">
+            <div>
+              <label class="label" for="sc-mq">Metri quadrati da scaricare</label>
+              <div class="relative">
+                <input id="sc-mq" type="number" inputmode="decimal" min="0.01" step="0.01" class="input pr-12 text-lg font-semibold" placeholder="0,00" required>
+                <span class="absolute right-4 top-1/2 -translate-y-1/2 text-grafite font-semibold">m²</span>
+              </div>
+              <div class="flex gap-2 mt-2 flex-wrap" id="sc-quick"></div>
+            </div>
+            <div>
+              <label class="label" for="sc-operatore">Operatore</label>
+              <select id="sc-operatore" class="input" required></select>
+            </div>
+          </div>
+
+          <div>
+            <label class="label" for="sc-cliente">Cliente</label>
+            <input id="sc-cliente" type="text" class="input" placeholder="Nome e cognome o ragione sociale" list="clienti-list" required autocomplete="off">
+            <datalist id="clienti-list"></datalist>
+          </div>
+
+          <div>
+            <label class="label" for="sc-note">Note <span class="font-normal text-grafite">(facoltative)</span></label>
+            <input id="sc-note" type="text" class="input" placeholder="Es. numero ordine, cantiere, consegna…">
+          </div>
+
+          <div class="flex flex-col sm:flex-row sm:items-center gap-3 pt-2">
+            <div class="text-sm text-grafite flex-1">🕒 Registrazione: <b id="sc-timestamp" class="tabular-nums text-grafite-dark"></b></div>
+            <button type="submit" class="btn btn-primary btn-xl">Conferma scarico</button>
+          </div>
+        </form>
+
+        <aside class="card p-5 lg:col-span-2">
+          <h3 class="font-bold mb-3">Ultimi scarichi</h3>
+          <ul id="sc-ultimi" class="space-y-2"></ul>
+        </aside>
+      </div>
+    </section>
+
+    <!-- ===================== TAB: CARICO SMART ===================== -->
+    <section id="tab-carico" class="tab-panel" role="tabpanel" hidden>
+      <div class="grid lg:grid-cols-5 gap-5">
+        <div class="card p-5 lg:col-span-2 space-y-4">
+          <div>
+            <h2 class="section-title">Carico Smart con IA</h2>
+            <p class="text-sm text-grafite">Fotografa o carica una fattura, un DDT o una bolla: l'IA estrae articoli e m², tu controlli e confermi.</p>
+          </div>
+          <div id="ai-mode" class="ai-mode"></div>
+
+          <label for="doc-file" id="dropzone" class="dropzone">
+            <input id="doc-file" type="file" accept="image/*,application/pdf" class="sr-only">
+            <span class="text-4xl">📄</span>
+            <span class="font-semibold">Tocca per fotografare o scegliere un file</span>
+            <span class="text-xs text-grafite">Foto (JPG, PNG) o PDF &middot; puoi anche trascinarlo qui</span>
+          </label>
+          <div class="flex gap-2">
+            <label for="doc-camera" class="btn btn-ghost flex-1 cursor-pointer">📷 Scatta foto</label>
+            <input id="doc-camera" type="file" accept="image/*" capture="environment" class="sr-only">
+          </div>
+
+          <div id="doc-preview" class="doc-preview" hidden></div>
+
+          <button id="btn-analizza" class="btn btn-primary btn-xl w-full" disabled>✨ Analizza documento</button>
+          <button id="btn-manuale" class="btn btn-ghost w-full">✍️ Inserisci righe a mano</button>
+        </div>
+
+        <div class="card p-5 lg:col-span-3">
+          <div class="flex items-start justify-between gap-3 mb-4">
+            <div>
+              <h3 class="font-bold text-lg">Righe da caricare</h3>
+              <p class="text-sm text-grafite">Abbina ogni riga a un articolo del catalogo o creane uno nuovo.</p>
+            </div>
+            <button id="btn-add-riga" class="btn btn-ghost btn-sm shrink-0">+ Riga</button>
+          </div>
+
+          <div id="ai-loading" class="ai-loading" hidden>
+            <div class="spinner"></div><span>Analisi del documento in corso…</span>
+          </div>
+
+          <div class="grid sm:grid-cols-3 gap-3 mb-4">
+            <div><label class="label" for="ca-fornitore">Fornitore</label><input id="ca-fornitore" class="input" placeholder="Fornitore"></div>
+            <div><label class="label" for="ca-doc">N. documento</label><input id="ca-doc" class="input" placeholder="DDT / Fattura n."></div>
+            <div><label class="label" for="ca-operatore">Operatore</label><select id="ca-operatore" class="input"></select></div>
+          </div>
+
+          <div id="righe" class="space-y-3"></div>
+          <p id="righe-empty" class="empty">Nessuna riga. Analizza un documento oppure aggiungi le righe a mano.</p>
+
+          <div class="flex flex-col sm:flex-row gap-3 sm:items-center pt-4 mt-4 border-t border-sabbia-200">
+            <div class="flex-1 text-sm">Totale da caricare: <b id="righe-totale" class="text-lg tabular-nums">0 m²</b></div>
+            <button id="btn-annulla-carico" class="btn btn-ghost">Svuota</button>
+            <button id="btn-conferma-carico" class="btn btn-primary btn-xl" disabled>Conferma carico</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== TAB: STORICO ===================== -->
+    <section id="tab-storico" class="tab-panel" role="tabpanel" hidden>
+      <div class="card p-3 sm:p-4 mb-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-6 items-end">
+        <div class="lg:col-span-2">
+          <label class="label" for="st-search">Cerca</label>
+          <input id="st-search" type="search" class="input" placeholder="Articolo, cliente, operatore, documento…">
+        </div>
+        <div>
+          <label class="label" for="st-tipo">Tipo</label>
+          <select id="st-tipo" class="input">
+            <option value="">Tutti</option><option value="carico">Carichi</option><option value="scarico">Scarichi</option><option value="rettifica">Rettifiche</option>
+          </select>
+        </div>
+        <div>
+          <label class="label" for="st-reparto">Reparto</label>
+          <select id="st-reparto" class="input">
+            <option value="">Tutti</option><option>Showroom</option><option>Magazzino</option>
+          </select>
+        </div>
+        <div><label class="label" for="st-dal">Dal</label><input id="st-dal" type="date" class="input"></div>
+        <div><label class="label" for="st-al">Al</label><input id="st-al" type="date" class="input"></div>
+      </div>
+
+      <div class="flex flex-wrap gap-2 items-center mb-3">
+        <p id="st-summary" class="text-sm text-grafite flex-1"></p>
+        <button id="btn-export-csv" class="btn btn-ghost btn-sm">⬇️ Esporta CSV (Excel)</button>
+        <button id="btn-export-json" class="btn btn-ghost btn-sm">💾 Backup completo</button>
+      </div>
+
+      <div class="card overflow-hidden">
+        <div class="overflow-x-auto">
+          <table class="log-table">
+            <thead>
+              <tr><th>Data e ora</th><th>Tipo</th><th>Articolo</th><th class="text-right">m²</th><th>Reparto</th><th>Operatore</th><th>Cliente / Fornitore</th><th>Documento / Note</th><th class="text-right">Giacenza dopo</th></tr>
+            </thead>
+            <tbody id="log-body"></tbody>
+          </table>
+        </div>
+        <p id="log-empty" class="empty" hidden>Nessun movimento per i filtri selezionati.</p>
+      </div>
+    </section>
+  </main>
+
+  <!-- ===================== MODALE ARTICOLO ===================== -->
+  <dialog id="modal-prodotto" class="modal">
+    <form id="form-prodotto" method="dialog" class="modal-body" novalidate>
+      <div class="flex items-center justify-between mb-4">
+        <h2 id="mp-title" class="section-title">Nuovo articolo</h2>
+        <button type="button" class="icon-btn" data-close aria-label="Chiudi">✕</button>
+      </div>
+      <div class="grid sm:grid-cols-5 gap-4">
+        <div class="sm:col-span-2">
+          <span class="label">Foto</span>
+          <label for="mp-foto" class="photo-drop">
+            <img id="mp-foto-preview" alt="" hidden>
+            <span id="mp-foto-hint" class="text-center text-sm text-grafite">📷<br>Tocca per scattare o caricare</span>
+          </label>
+          <input id="mp-foto" type="file" accept="image/*" class="sr-only">
+          <button type="button" id="mp-foto-remove" class="btn btn-ghost btn-sm w-full mt-2" hidden>Rimuovi foto</button>
+        </div>
+        <div class="sm:col-span-3 space-y-3">
+          <div><label class="label" for="mp-nome">Nome articolo *</label><input id="mp-nome" class="input" required placeholder="Es. Rovere Naturale"></div>
+          <div class="grid grid-cols-2 gap-3">
+            <div><label class="label" for="mp-codice">Codice</label><input id="mp-codice" class="input" placeholder="Es. GRL-6012"></div>
+            <div><label class="label" for="mp-formato">Formato</label><input id="mp-formato" class="input" placeholder="Es. 60x120"></div>
+          </div>
+          <div class="grid grid-cols-2 gap-3">
+            <div><label class="label" for="mp-categoria">Categoria</label>
+              <select id="mp-categoria" class="input"><option>Pavimento</option><option>Rivestimento</option><option>Pavimento e Rivestimento</option></select></div>
+            <div><label class="label" for="mp-tipologia">Tipologia</label><input id="mp-tipologia" class="input" list="tipologie-list" placeholder="Es. Effetto legno"><datalist id="tipologie-list"></datalist></div>
+          </div>
+        </div>
+      </div>
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-4">
+        <div><label class="label" for="mp-mq">Giacenza (m²)</label><input id="mp-mq" type="number" inputmode="decimal" step="0.01" min="0" class="input" value="0"></div>
+        <div><label class="label" for="mp-scorta">Scorta minima</label><input id="mp-scorta" type="number" inputmode="decimal" step="0.01" min="0" class="input" value="20"></div>
+        <div><label class="label" for="mp-mqscatola">m² per scatola</label><input id="mp-mqscatola" type="number" inputmode="decimal" step="0.01" min="0" class="input" placeholder="Es. 1,44"></div>
+        <div><label class="label" for="mp-fornitore">Fornitore</label><input id="mp-fornitore" class="input" placeholder="Es. Marazzi"></div>
+      </div>
+      <p id="mp-mq-hint" class="text-xs text-grafite mt-2" hidden>Se cambi la giacenza a mano, viene registrata una rettifica nello storico.</p>
+      <div class="flex flex-col-reverse sm:flex-row gap-3 mt-6">
+        <button type="button" id="mp-delete" class="btn btn-danger-ghost sm:mr-auto" hidden>Elimina articolo</button>
+        <button type="button" class="btn btn-ghost" data-close>Annulla</button>
+        <button type="submit" class="btn btn-primary">Salva articolo</button>
+      </div>
+    </form>
+  </dialog>
+
+  <!-- ===================== MODALE IMPOSTAZIONI ===================== -->
+  <dialog id="modal-settings" class="modal">
+    <form id="form-settings" method="dialog" class="modal-body" novalidate>
+      <div class="flex items-center justify-between mb-4">
+        <h2 class="section-title">Impostazioni</h2>
+        <button type="button" class="icon-btn" data-close aria-label="Chiudi">✕</button>
+      </div>
+
+      <h3 class="font-bold mb-2">Intelligenza artificiale (Gemini)</h3>
+      <p class="text-sm text-grafite mb-3">La chiave resta solo su questo dispositivo e non viene mai inserita nel codice. Senza chiave il Carico Smart funziona in modalità simulata. Puoi crearne una gratis su <a href="https://aistudio.google.com/apikey" target="_blank" rel="noopener" class="text-mirisa underline">Google AI Studio</a>.</p>
+      <div class="grid sm:grid-cols-3 gap-3 mb-6">
+        <div class="sm:col-span-2">
+          <label class="label" for="set-apikey">Chiave API Gemini</label>
+          <div class="flex gap-2">
+            <input id="set-apikey" type="password" class="input" placeholder="AIza…" autocomplete="off">
+            <button type="button" id="set-apikey-toggle" class="btn btn-ghost btn-sm shrink-0" aria-label="Mostra chiave">👁</button>
+          </div>
+        </div>
+        <div><label class="label" for="set-model">Modello</label><input id="set-model" class="input" placeholder="gemini-2.5-flash"></div>
+      </div>
+
+      <h3 class="font-bold mb-2">Personale</h3>
+      <p class="text-sm text-grafite mb-3">Un nome per riga. Compaiono nella scelta dell'operatore.</p>
+      <div class="grid sm:grid-cols-2 gap-3 mb-6">
+        <div><label class="label" for="set-staff-showroom">🏬 Showroom</label><textarea id="set-staff-showroom" rows="4" class="input"></textarea></div>
+        <div><label class="label" for="set-staff-magazzino">🏭 Magazzino</label><textarea id="set-staff-magazzino" rows="4" class="input"></textarea></div>
+      </div>
+
+      <h3 class="font-bold mb-2">Dati</h3>
+      <div class="flex flex-wrap gap-2 mb-2">
+        <label for="set-import" class="btn btn-ghost btn-sm cursor-pointer">📥 Ripristina backup</label>
+        <input id="set-import" type="file" accept="application/json,.json" class="sr-only">
+        <button type="button" id="set-reset" class="btn btn-danger-ghost btn-sm">Azzera tutti i dati</button>
+      </div>
+      <p id="set-storage" class="text-xs text-grafite"></p>
+
+      <div class="flex justify-end gap-3 mt-6">
+        <button type="button" class="btn btn-ghost" data-close>Chiudi</button>
+        <button type="submit" class="btn btn-primary">Salva impostazioni</button>
+      </div>
+    </form>
+  </dialog>
+
+  <!-- Notifiche -->
+  <div id="toasts" class="toasts" aria-live="polite"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
