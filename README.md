@@ -7,6 +7,7 @@ Web app interna per gestire in tempo reale i m² di pavimenti e rivestimenti tra
 - `style.css` – stili personalizzati e ottimizzazioni touch
 - `app.js` – logica completa (catalogo, scarico, carico con IA, storico, impostazioni)
 - `Logo-Mirisa-Ceramiche-Vettoriale-2.svg` – logo aziendale
+- `manifest.json`, `sw.js`, icone PNG – installazione sul telefono come app "Magazzino" (id e scope propri, separati dalle altre app Mirisa)
 
 ## Pubblicazione su GitHub Pages
 1. Crea un repository (es. `magazzino-mirisa`) e carica tutti i file nella radice.

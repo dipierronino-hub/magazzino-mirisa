@@ -951,3 +951,8 @@ function init() {
 }
 
 document.addEventListener('DOMContentLoaded', init);
+
+// Service worker con scope limitato a questa cartella: funziona anche offline
+if ('serviceWorker' in navigator && location.protocol === 'https:') {
+  navigator.serviceWorker.register('sw.js', { scope: './' }).catch(err => console.warn('Service worker non registrato', err));
+}
